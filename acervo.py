@@ -44,3 +44,7 @@ class acervo:
         nota = f.readline()
         duracao = f.readline()
         return codigo, tipo, nome, autor, elenco, pais,data_add,data_lanc,nota,duracao
+
+    def pesoTermo(self,contaOcorrencias,qtdeDocsComTermo):
+        idf = (self.quant_docs/qtdeDocsComTermo)
+        return contaOcorrencias*idf
