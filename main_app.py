@@ -26,7 +26,7 @@ DATE_COLUMN = 'date/time'
 pesquisa = acervo()
 total = st.write('Acervo = ', pesquisa.quant_docs)
 with st.form(key='my_form'):
-    text_input = st.text_input(label='O que deseja assistir')
+    text_input = st.text_input(label='Vamos almoçar?')
     submit_button = st.form_submit_button(label='Pesquisar')
 
     print(text_input)
