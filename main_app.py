@@ -31,3 +31,6 @@ with st.form(key='my_form'):
 
     print(text_input)
     
+
+id_recipe, data_recipe = pesquisa.printDoc(pesquisa.doc_DIR[0])
+st.write("Id da receita: " + id_recipe,"\n Data da publicação: " + data_recipe)
