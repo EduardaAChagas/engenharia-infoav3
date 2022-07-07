@@ -33,18 +33,29 @@ class acervo:
     def printDoc(self,arquivo):
         f = open(arquivo, 'r')
         
-        codigo = f.readline()
-        tipo = f.readline()
-        nome = f.readline()
-        autor = f.readline()
-        elenco = f.readline()
-        pais = f.readline()
-        data_add = f.readline()
-        data_lanc =  f.readline()
-        nota = f.readline()
-        duracao = f.readline()
-        return codigo, tipo, nome, autor, elenco, pais,data_add,data_lanc,nota,duracao
+        f.readline()
+        id_receita = f.readline()
+        f.readline()
+        f.readline()
+        data_receita = f.readline()
 
-    def pesoTermo(self,contaOcorrencias,qtdeDocsComTermo):
-        idf = (self.quant_docs/qtdeDocsComTermo)
+        return id_receita, data_receita
+
+    def Idf(self,pesquisa):
+        if(self.qtdeDocsComTermo(pesquisa) != 0):
+            return (self.quant_docs/self.qtdeDocsComTermo(pesquisa))
+        else:
+            return 0
+
+    def pesoTermo(self,contaOcorrencias,idf):
         return contaOcorrencias*idf
+
+    def similaridadeUnidade(self,busca,arquivo,idf):
+        tf = self.contaOcorrencias(arquivo,busca)
+        #peso do doc
+        pesoDoc = self.peso(tf,idf)
+        #peso de busca
+        pesoBusca = (0.5+(tf/2))*idf
+
+        sim = (pesoBusca*pesoDoc)/(math.sqrt(math.pow(pesoBusca,2)) +math.sqrt(math.pow(pesoDoc,2)) ) 
+        return sim
