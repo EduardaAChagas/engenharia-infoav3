@@ -21,6 +21,13 @@ class acervo:
             if self.check(arq,pesquisa)==True:
                 cont=cont+1
         return cont
+    
+    def IDF(self, pesquisa):
+        quantidade = self.qtdeDocsComTermo(pesquisa)
+        if (quantidade == 0):
+            return 0
+        idf = (self.quant_docs/quantidade)
+        return idf
 
     #checa se há o termo pesquisado em determinado arquivo
     def ocorrNoDoc(self,arquivo,pesquisa):
