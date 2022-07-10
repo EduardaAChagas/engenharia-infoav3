@@ -16,6 +16,8 @@ with open('RAW_recipes.csv', encoding='utf-8') as arquivo_referencia:
     string_nova = re.sub(u'[^a-zA-Z0-9áéíóúÁÉÍÓÚâêîôÂÊÎÔãõÃÕçÇ. ]', '', string_velha)
     col2 = l[1]
     col2 = tratamento(col2)
+    col3 = l[2]
+    col3 = tratamento(col3)
     col4 = l[3]
     col4 = tratamento(col4)
     col5 = l[4]
@@ -35,7 +37,7 @@ with open('RAW_recipes.csv', encoding='utf-8') as arquivo_referencia:
     arquivo = open("biblioteca/"+string_nova +'.txt', 'w')
     arquivo.write(col1+'\n')
     arquivo.write(col2+'\n')
-    arquivo.write(string_nova+'\n')
+    arquivo.write(col3+'\n')
     arquivo.write(col4+'\n')
     arquivo.write(col5+'\n')
     arquivo.write(col6+'\n')
@@ -48,5 +50,5 @@ with open('RAW_recipes.csv', encoding='utf-8') as arquivo_referencia:
     print(cont)
     cont = cont +1
     arquivo.close()
-    if (cont == 2000):
+    if (cont == 10):
       break

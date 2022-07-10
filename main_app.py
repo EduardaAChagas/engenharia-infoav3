@@ -27,10 +27,54 @@ pesquisa = acervo()
 total = st.write('Acervo = ', pesquisa.quant_docs)
 with st.form(key='my_form'):
     text_input = st.text_input(label='Vamos almoçar?')
-    submit_button = st.form_submit_button(label='Pesquisar')
+    search_button = st.form_submit_button(label='Arroz soltinho')
 
     print(text_input)
     
+if search_button:
+    st.text("Receitas relevantes:")
+    doc_DIR = pesquisa.doc_DIR
+    data_DIR = pesquisa.data_DIR
+    idf = pesquisa.IDF(text_input)
+    if (idf == 0):
+        st.write("Nenhuma receita encontrada, vovó duds sente muito :/")
+    else:
+        receitas_encontradas = 0
+        cont = 0
+        max = 0
+        cont2 = 0
+        result = []
+        vet_simi = []
+        latest_iteration = st.empty()
+        bar = st.progress(0)
+        for recipes in doc_DIR:
+            simil = pesquisa.similaridadeUnidade(text_input, recipes, idf)
+            if simil>0:
+                if simil>max:
+                    max = simil
+                    result.insert(0,recipes)
+                    vet_simi.insert(0,simil)
+                else:
+                    result.append(recipes)
+                    vet_simi.append(simil)
+                receitas_encontradas = receitas_encontradas+1
+                latest_iteration.text(f'Procurando... {cont+1}')
+                bar.progress(cont+1)
+                if cont != 90:
+                    cont = cont+1
+                if cont2 == (pesquisa.quant_docs - 2):
+                    cont2 = cont2+1
+                print(recipes)
+    if idf != 0:
+        quant_docs = pesquisa.qtdeDocsComTermo(text_input)
+        st.write("Receitas encontradas: ",quant_docs)
+        result2 = result
+        cont = 0
+        vetores = ["0","1","2","3","4"]
+        for x in range(0,len(result2)):
+            with st.form(key='my-form2' + vetores[x]):
+                
+        
 
 id_recipe, data_recipe = pesquisa.printDoc(pesquisa.doc_DIR[0])
 st.write("Id da receita: " + id_recipe,"\n Data da publicação: " + data_recipe)
