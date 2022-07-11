@@ -21,13 +21,6 @@ class acervo:
             if self.ocorrNoDoc(arq,pesquisa)==True:
                 cont=cont+1
         return cont
-    
-    def IDF(self, pesquisa):
-        quantidade = self.qtdeDocsComTermo(pesquisa)
-        if (quantidade == 0):
-            return 0
-        idf = (self.quant_docs/quantidade)
-        return idf
 
     #checa se há o termo pesquisado em determinado arquivo
     def ocorrNoDoc(self,arquivo,pesquisa):
@@ -54,11 +47,12 @@ class acervo:
 
         return name, id_receita, minutes, contributorid, submitted, tags, nutrition, nsteps, steps, description, ingredients
 
-    def Idf(self,pesquisa):
-        if(self.qtdeDocsComTermo(pesquisa) != 0):
-            return (self.quant_docs/self.qtdeDocsComTermo(pesquisa))
-        else:
+    def IDF(self, pesquisa):
+        quantidade = self.qtdeDocsComTermo(pesquisa)
+        if quantidade == 0 or pesquisa == None or pesquisa == "":
             return 0
+        idf = (self.quant_docs/quantidade)
+        return idf
 
     def pesoTermo(self,contaOcorrencias,idf):
         return contaOcorrencias*idf
