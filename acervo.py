@@ -18,7 +18,7 @@ class acervo:
     def qtdeDocsComTermo(self,pesquisa):
         cont = 0
         for arq in self.doc_DIR:
-            if self.check(arq,pesquisa)==True:
+            if self.ocorrNoDoc(arq,pesquisa)==True:
                 cont=cont+1
         return cont
     
@@ -40,13 +40,19 @@ class acervo:
     def printDoc(self,arquivo):
         f = open(arquivo, 'r')
         
-        f.readline()
+        name = f.readline()
         id_receita = f.readline()
-        f.readline()
-        f.readline()
-        data_receita = f.readline()
+        minutes = f.readline()
+        contributorid = f.readline()
+        submitted = f.readline()
+        tags = f.readline()
+        nutrition = f.readline()
+        nsteps = f.readline()
+        steps = f.readline()
+        description = f.readline()
+        ingredients = f.readline()
 
-        return id_receita, data_receita
+        return name, id_receita, minutes, contributorid, submitted, tags, nutrition, nsteps, steps, description, ingredients
 
     def Idf(self,pesquisa):
         if(self.qtdeDocsComTermo(pesquisa) != 0):
@@ -60,7 +66,7 @@ class acervo:
     def similaridadeUnidade(self,busca,arquivo,idf):
         tf = self.contaOcorrencias(arquivo,busca)
         #peso do doc
-        pesoDoc = self.peso(tf,idf)
+        pesoDoc = self.pesoTermo(tf,idf)
         #peso de busca
         pesoBusca = (0.5+(tf/2))*idf
 
