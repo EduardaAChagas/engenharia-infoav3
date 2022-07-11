@@ -74,7 +74,7 @@ if search_button:
         for x in range(0,len(result2)):
             with st.form(key='my-form2' + vetores[x]):
                 name, id, minutes, contributorid, submitted, tags, nutrition, nsteps, steps, description, ingredients = pesquisa.printDoc(result2[x])
-                st.write("Similaridade: ",vet_simi[x],"\n Nome: " + name, "\n Id da receita: " + id, "\n Id do contribuidor: " + contributorid, "\n Data de submissão: " + submitted, 
+                st.write("Similaridade: ",vet_simi[x],"\n\n Nome: " + name, "\n Id da receita: " + id, "\n Id do contribuidor: " + contributorid, "\n Data de submissão: " + submitted, 
                 "\n Palavras-chave: " + tags, "\n Valor nutricional: " + nutrition, "\n Número de passos: " + nsteps, "\n Passos: " + steps, "\n Descrição: " + description)
                 botao_prox = st.form_submit_button(label = "Ver no livro de receitas")
                 if botao_prox: 
@@ -83,6 +83,3 @@ if search_button:
                     cont = cont + 1
 
         print(text_input)
-
-id_recipe, data_recipe = pesquisa.printDoc(pesquisa.doc_DIR[0])
-st.write("Id da receita: " + id_recipe,"\n Data da publicação: " + data_recipe)
