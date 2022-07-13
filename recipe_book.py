@@ -10,11 +10,13 @@ class book:
         self.doc_DIR = [self.data_DIR+name for name in os.listdir(self.data_DIR) if not name[0] == '.']
 
 
+    #TF
     def contaOcorrencias(self,arquivo,pesquisa):
         with open(arquivo) as f:
             ocorrencia = f.read().count(pesquisa)
         return ocorrencia
 
+    #qtde docs com o termo pesquisado
     def qtdeDocsComTermo(self,pesquisa):
         cont = 0
         for arq in self.doc_DIR:
@@ -22,7 +24,7 @@ class book:
                 cont=cont+1
         return cont
 
-    #checa se há o termo pesquisado em determinado arquivo
+    #checa se há o termo pesquisado no arquivo
     def ocorrNoDoc(self,arquivo,pesquisa):
         with open(arquivo) as f:
             if pesquisa in f.read():
