@@ -20,17 +20,9 @@ class book:
     def qtdeDocsComTermo(self,pesquisa):
         cont = 0
         for arq in self.doc_DIR:
-            if self.ocorrNoDoc(arq,pesquisa)==True:
+            if self.isTermInThisDoc(arq,pesquisa)==True:
                 cont=cont+1
         return cont
-
-    #checa se há o termo pesquisado no arquivo
-    def ocorrNoDoc(self,arquivo,pesquisa):
-        with open(arquivo) as f:
-            if pesquisa in f.read():
-                return True
-            else:
-                return False
 
     def printRecipe(self,arquivo):
         f = open(arquivo, 'r')
@@ -58,6 +50,7 @@ class book:
     def pesoTermo(self,contaOcorrencias,idf):
         return contaOcorrencias*idf
 
+    #checa se há o termo pesquisado em determinado arquivo
     def isTermInThisDoc(self, arquivo, pesquisa):
         with open(arquivo) as f:
             if pesquisa in f.read():
@@ -74,3 +67,38 @@ class book:
 
         sim = (pesoBusca*pesoDoc)/(math.sqrt(math.pow(pesoBusca,2)) +math.sqrt(math.pow(pesoDoc,2)) ) 
         return sim
+
+    def createCollection(self, pesquisa):
+        keys = pesquisa.split()
+        refCollection = { }
+
+        for x in keys:
+            refCollection[x] = []
+        
+        return refCollection
+        
+    def updateCollection(self, collection, id_doc):
+        for x in collection:
+            collection[x].append(id_doc)
+
+    def recall(self, vp,fn):
+        """
+        VP -> qtd  documentos distintos 
+        presentes na coleção de referência;
+         
+        FN -> documentos que ESTÃO coleção 
+        de referencia mas NÃO ESTÃO no vetor de resultados da busca.
+        
+        """
+        return vp/(vp + fn)
+
+    def precision(self, vp,fp):
+        """
+        VP -> qtd  documentos distintos 
+        presentes na coleção de referência;
+         
+        FP -> documentos que não estão coleção 
+        de referencia mas estão no vetor de resultados da busca.
+        
+        """
+        return vp/(vp + fp)
