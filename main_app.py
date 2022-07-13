@@ -31,7 +31,11 @@ if search_button:
         result = []
         vet_simi = []
         latest_iteration = st.empty()
+        colecaoRef = pesquisa.createCollection(text_input)
         for recipes in doc_DIR:
+            name, id, minutes, contributorid, submitted, tags, nutrition, nsteps, steps, description, ingredients = pesquisa.printRecipe(recipes)
+            if pesquisa.isTermInThisDoc(recipes, text_input) == True:
+                pesquisa.updateCollection(colecaoRef, id)
             simil = pesquisa.similaridadeUnidade(text_input, recipes, idf)
             if simil>0:
                 if simil>max:
@@ -65,3 +69,4 @@ if search_button:
                     st.text("Cancelar busca, não estou mais com fome")
                 if cont == 4:
                     cont = cont + 1
+    st.write(colecaoRef)
