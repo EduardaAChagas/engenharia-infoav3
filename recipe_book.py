@@ -80,13 +80,14 @@ class book:
     def updateCollection(self, collection, id_doc):
         for x in collection:
             collection[x].append(id_doc)
+        print(collection)
 
     def recall(self, vp,fn):
         """
         VP -> qtd  documentos distintos 
-        presentes na coleção de referência;
-         
-        FN -> documentos que ESTÃO coleção 
+        presentes na coleção de referência e nos resultados obtidos;
+        
+        FN -> qtd documentos que ESTÃO coleção 
         de referencia mas NÃO ESTÃO no vetor de resultados da busca.
         
         """
@@ -95,10 +96,34 @@ class book:
     def precision(self, vp,fp):
         """
         VP -> qtd  documentos distintos 
-        presentes na coleção de referência;
+        presentes na coleção de referência e nos resultados obtidos;
          
-        FP -> documentos que não estão coleção 
+        FP -> qtd documentos que não estão coleção 
         de referencia mas estão no vetor de resultados da busca.
         
         """
         return vp/(vp + fp)
+
+    #retorna conjunto interseção entre a coleção de referencia e resultados da busca
+    def indicesEffect(self,collection, resultIds):
+        truePositives = []
+        falseNegatives = []
+        falsesPositives = []
+        for x in collection:
+            for y in collection[x]:
+                #verdadeiros positivos
+                if y in resultIds:
+                    if y not in truePositives:
+                        truePositives.append(y)
+                #falsos negativos
+                elif y not in resultIds:
+                    if y not in falseNegatives:
+                        falseNegatives.append(y)
+
+        #falsos positivos
+        for x in resultIds:
+            if x not in collection.values():
+                if x not in falsesPositives:
+                    falsesPositives.append(x)
+
+        return truePositives, falseNegatives, falsesPositives
