@@ -8,6 +8,7 @@ from streamlit.type_util import data_frame_to_bytes
 from recipe_book import book
 
 
+
 st.title('Busca em Receitas da Vovó Duds')
 DATE_COLUMN = 'date/time'
 
@@ -57,10 +58,11 @@ if search_button:
         result2 = result
         cont = 0
         vetores = ["0","1","2","3","4"]
+        idResults = []
         for x in range(0,len(result2)): 
             with st.form(key='my-form2' + vetores[x]):
                 name, id, minutes, contributorid, submitted, tags, nutrition, nsteps, steps, description, ingredients = pesquisa.printRecipe(result2[x])
-
+                idResults.append(id)
                 st.write("Similaridade: ",vet_simi[x],"\n\n Nome: " + name, "\n Id da receita: " + id, "\n Id do contribuidor: " + contributorid, "\n Data de submissão: " + submitted, 
                 "\n Palavras-chave: " + tags, "\n Valor nutricional: " + nutrition, "\n Número de passos: " + nsteps, "\n Passos: " + steps, "\n Descrição: " + description)
                 
@@ -69,4 +71,8 @@ if search_button:
                     st.text("Cancelar busca, não estou mais com fome")
                 if cont == 4:
                     cont = cont + 1
-    st.write(colecaoRef)
+        vp, fn, fp = pesquisa.indicesEffect(colecaoRef, idResults)
+        recall = pesquisa.recall(vp,fn)
+        precision = pesquisa.precision(vp,fp)
+    st.write("Recall: ",recall,"\n Precision: ", precision)        
+    st.write(type(colecaoRef['pizza'][0]))
