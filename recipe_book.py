@@ -24,6 +24,7 @@ class book:
                 cont=cont+1
         return cont
 
+    #Retorna os metadados da receita
     def printRecipe(self,arquivo):
         f = open(arquivo, 'r')
         name = f.readline()
@@ -68,6 +69,7 @@ class book:
         sim = (pesoBusca*pesoDoc)/(math.sqrt(math.pow(pesoBusca,2)) +math.sqrt(math.pow(pesoDoc,2)) ) 
         return sim
 
+    #Retorna nova instância de coleção de referencia dos documentos relevantes
     def createCollection(self, pesquisa):
         keys = pesquisa.split()
         refCollection = { }
@@ -76,33 +78,25 @@ class book:
             refCollection[x] = []
         
         return refCollection
-        
+
+    #atualiza a coleção de refencia com um novo documento relevante    
     def updateCollection(self, collection, id_doc):
         for x in collection:
             collection[x].append(id_doc)
         print(collection)
 
+    
     def recall(self, vp,fn):
-        """
-        VP -> qtd  documentos distintos 
-        presentes na coleção de referência e nos resultados obtidos;
-        
-        FN -> qtd documentos que ESTÃO coleção 
-        de referencia mas NÃO ESTÃO no vetor de resultados da busca.
-        
-        """
-        return vp/(vp + fn)
+        Vp = len(vp)
+        Fn = len(fn)
+
+        return Vp/(Vp + Fn)
 
     def precision(self, vp,fp):
-        """
-        VP -> qtd  documentos distintos 
-        presentes na coleção de referência e nos resultados obtidos;
-         
-        FP -> qtd documentos que não estão coleção 
-        de referencia mas estão no vetor de resultados da busca.
-        
-        """
-        return vp/(vp + fp)
+        Vp = len(vp)
+        Fp = len(fp)
+
+        return Vp/(Vp + Fp)
 
     #retorna conjunto interseção entre a coleção de referencia e resultados da busca
     def indicesEffect(self,collection, resultIds):
