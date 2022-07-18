@@ -74,4 +74,4 @@ if search_button:
         vp, fn, fp = pesquisa.indicesEffect(colecaoRef, idResults)
         recall = pesquisa.recall(vp,fn)
         precision = pesquisa.precision(vp,fp)
-    st.write("Recall: ",recall,"\n Precision: ", precision)
+        st.write("Recall: ",recall,"\n Precision: ", precision)

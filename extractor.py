@@ -55,5 +55,5 @@ with open('RAW_recipes.csv', encoding='utf-8') as arquivo_referencia:
     print(cont)
     cont = cont +1
     arquivo.close()
-    if (cont == 5):
+    if (cont == 2000):
       break
