@@ -76,27 +76,24 @@ class bow:
             arqTokenizados[i] = arqTokenizados[i].split()
         return arqTokenizados
 
+    tokenArq = tokenizeArquivosSepar(arquivos)
     #conta quantas vezes uma palavra do vocabulario aparece no doc
     def dicionario_de_contagem(vocabulario, documento):    
         dic = dict.fromkeys(vocabulario, 0)
+        just = 0
         try:
             for palavra in documento:
                 dic[palavra] += 1
             return dic
         except:
-            print("\n#\n")
+            just += 1
 
         return dic
-
-    tokenArq = tokenizeArquivosSepar(arquivos)
     
     dictDeCont = []
     for i in range(0,len(tokenArq)):
         aux = dicionario_de_contagem(Vocab,tokenArq[i])
         dictDeCont.append(aux)
-
-    print(tokenArq)
-
 
     #qtde vezes q uma palavara aparece no doc/qtde palavras no doc
     def calculaTF(dic_de_cont, doc): 
@@ -109,13 +106,9 @@ class bow:
                 dicty[palavra] = quantidade/float(comp_doc)
             dicDeDic.append(dicty)
         return dicDeDic
- 
-    resultadoTF = calculaTF(dictDeCont,tokenArq)
-    #print(resultadoTF) 
-    
 
 
-    def computaIDF(lista_de_docs,vocab):
+    def IDF(self,lista_de_docs,vocab):
         idf_dic = {}
         N = len(lista_de_docs)
 
@@ -129,16 +122,11 @@ class bow:
 
         return (idf_dic)
 
-    resultIdf = computaIDF(tokenArq,Vocab)
-    #print(resultIdf)
-    
-
-
-    def computaTFIDF(tf_bow, idfs):
+    def TFIDF(self,tf_bow, idfs):
         tfidf = {}
         listfidf = []
         for doc in tf_bow:
-            for word in idfs:
+            for word in tf_bow:
                 if word in doc:
                     tf = doc[word]
                 else:
@@ -147,23 +135,13 @@ class bow:
                 tfidf[word] = tf*idf
                 listfidf.append(tfidf)
         return listfidf
-    
-    resultTfIdf = computaTFIDF(resultadoTF,resultIdf)
-    print(resultTfIdf)
-    
 
+    def newTFIDF(self,tf_bow,idfs):
+        tfidf = {}
 
+        for palavra in tf_bow:
+            tf = tf_bow[palavra]
+            idf = idfs[palavra]
+            tfidf[palavra] = tf*idf
 
-    def similaridadeUnidade(self,busca,arquivo,idf):
-        tf = self.contaOcorrencias(arquivo,busca)
-        #peso do doc
-        pesoDoc = self.pesoTermo(tf,idf)
-        #peso de busca
-        pesoBusca = (0.5+(tf/2))*idf
-
-        sim = (pesoBusca*pesoDoc)/(math.sqrt(math.pow(pesoBusca,2)) +math.sqrt(math.pow(pesoDoc,2))) 
-        return sim
-
-
-    #similaridade
-    #ordenar documentos a partir da similaridade
+        return tfidf
